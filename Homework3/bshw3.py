@@ -15,25 +15,39 @@
 import requests
 import re
 from bs4 import BeautifulSoup
+# from os.path import basename, splitext
 
 print
 print (" - ....working......")
 print
 
-
 base_url = 'https://www.si.umich.edu/programs/bachelor-science-information/bsi-admissions'
 r = requests.get(base_url)
 soup = BeautifulSoup(r.text, "html.parser")
-# print (soup)
 
-# for student in soup.findall('student'):
-# 	print (student.get('alt', 'No!!'))
-
+## Part 1
 findstudent = soup.find_all(text = re.compile('student'))
-empty = []
+# amazingstudents = []
 for word in findstudent:
     fixed_text = str(word).replace('student', '“AMAZING student')
     word.replace_with(fixed_text)
-    empty.append(fixed_text)
+    # amazingstudents.append(fixed_text)
 
-print(empty)
+### Part 2 
+for link in soup.findAll('iframe'):
+	link['src'] = "/Users/tom/projects/STEPSI206/Homework3/media/tom.png"
+
+### Part 3
+### http://stackoverflow.com/questions/1579133/replace-src-of-all-img-elements-using-parser
+
+for img in soup.findAll('img'):
+	img['src'] = "/Users/tom/projects/SI206/Homework3/media/logo.png"
+
+
+text_file = open("Hw3SoupOutput.html", "w")
+print('Outputting html file....')
+text_file.write(str(soup))
+text_file.close()
+print('Done')
+
+
