@@ -14,6 +14,7 @@ import tweepy
 import nltk
 import requests
 import requests_oauthlib
+import TextBlob
 
 access_token = "36224295-icFWtb45o6oGSQlNow89Zon1dk3ezUPpfyoRZ9W1L"
 access_token_secret = "rb5sUyzZlQIbXQHnCoprBkxWdOethWw8goL0Qtc1A1onT"
@@ -31,3 +32,6 @@ public_tweets = api.search('UMSI')
 for tweet in public_tweets:
 	print(tweet.text)
 	
+#to find polarity/subjectivity https://github.com/redsky17/TwitterPersonality
+python twitter-persona.py [redacted_key] [redacted_secret] "Macklemore" 500 False
+
