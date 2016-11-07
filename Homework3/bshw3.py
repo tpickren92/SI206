@@ -11,11 +11,9 @@
 # Deliverables
 # Make sure the new page is uploaded to your GitHub account.
 
-
 import requests
 import re
 from bs4 import BeautifulSoup
-# from os.path import basename, splitext
 
 print
 print (" - ....working......")
@@ -27,22 +25,17 @@ soup = BeautifulSoup(r.text, "html.parser")
 
 ## Part 1
 findstudent = soup.find_all(text = re.compile('student'))
-# amazingstudents = []
 for word in findstudent:
-    fixed_text = str(word).replace('student', '“AMAZING student')
+    fixed_text = str(word).replace('student', 'AMAZING student')
     word.replace_with(fixed_text)
-    # amazingstudents.append(fixed_text)
 
 ### Part 2 
 for link in soup.findAll('iframe'):
-	link['src'] = "/Users/tom/projects/STEPSI206/Homework3/media/tom.png"
+	link['src'] = "/Users/tom/projects/SI206/Homework3/media/tomcat.jpg"
 
 ### Part 3
-### http://stackoverflow.com/questions/1579133/replace-src-of-all-img-elements-using-parser
-
 for img in soup.findAll('img'):
 	img['src'] = "/Users/tom/projects/SI206/Homework3/media/logo.png"
-
 
 text_file = open("Hw3SoupOutput.html", "w")
 print('Outputting html file....')

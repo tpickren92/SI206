@@ -18,9 +18,11 @@ from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk import word_tokenize, sent_tokenize
 import random #one of these is printing all the texts, is this ok?
 
-fname = "austen-sense.txt"
-f = open(fname, 'r')
-para = f.read()
+# fname = "austen-sense.txt"
+# f = open(fname, 'r')
+# para = f.read()
+
+para = text2[:151]
 
 tokens = nltk.word_tokenize(para)
 print("TOKENS")
@@ -36,13 +38,12 @@ tagmap = {"NN":"a noun","NNS":"a plural noun","VB":"a verb","RB":"an adverb","JJ
 substitution_probabilities = {"NN":.15,"NNS":.15,"VB":.1,"RB":.1, "JJ":.1}
 
 def spaced(word):
-	if word in [",", ".", "?", "!", ":"]:
+	if word in [",", ".", "?", "!", ":", "[", "]"]:
 		return word
 	else:
 		return " " + word
 
 final_words = []
-
 
 for (word, tag) in tagged_tokens:
 	if tag not in substitution_probabilities or random.random() > substitution_probabilities[tag]:
@@ -51,7 +52,6 @@ for (word, tag) in tagged_tokens:
 		new_word = input("Please enter %s:\n" % (tagmap[tag]))
 		final_words.append(spaced(new_word))
 print
-print("final shit below")
 print ("".join(final_words))
 
 print("\n\nEND*******")
