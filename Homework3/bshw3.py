@@ -19,23 +19,23 @@ print
 print (" - ....working......")
 print
 
+#make api call
 base_url = 'https://www.si.umich.edu/programs/bachelor-science-information/bsi-admissions'
 r = requests.get(base_url)
-soup = BeautifulSoup(r.text, "html.parser")
+soup = BeautifulSoup(r.text, "html.parser") #treat as html and convert to text
 
 ## Part 1
 findstudent = soup.find_all(text = re.compile('student'))
-for word in findstudent:
+for word in findstudent: #each line with student
     fixed_text = str(word).replace('student', 'AMAZING student')
-    word.replace_with(fixed_text)
-
+    word.replace_with(fixed_text) #swaps original text with edited text
 ### Part 2 
-for link in soup.findAll('iframe'):
-	link['src'] = "/Users/tom/projects/SI206/Homework3/media/tomcat.jpg"
+for link in soup.findAll('iframe'): # only 1 iframe on page, contains video
+	link['src'] = "/Users/tom/projects/SI206/Homework3/media/tomcat.jpg" #replaces original link src
 
 ### Part 3
-for img in soup.findAll('img'):
-	img['src'] = "/Users/tom/projects/SI206/Homework3/media/logo.png"
+for img in soup.findAll('img'): 
+	img['src'] = "/Users/tom/projects/SI206/Homework3/media/logo.png" #replaces original link src
 
 text_file = open("Hw3SoupOutput.html", "w")
 print('Outputting html file....')

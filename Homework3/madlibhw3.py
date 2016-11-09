@@ -12,46 +12,37 @@
 print("START*******")
 
 import nltk 
-from nltk.book import *
-from nltk import bigrams
-from nltk.tokenize import sent_tokenize, word_tokenize
-from nltk import word_tokenize, sent_tokenize
-import random #one of these is printing all the texts, is this ok?
+from nltk.book import text2
+import random
 
-# fname = "austen-sense.txt"
-# f = open(fname, 'r')
-# para = f.read()
+tokens = text2[:151] #only need first 150
+print
+print("First 150 tokens: ", tokens)
 
-para = text2[:151]
-
-tokens = nltk.word_tokenize(para)
-print("TOKENS")
-print(tokens[:151])
-
-tagged_tokens = nltk.pos_tag(tokens)
+tagged_tokens = nltk.pos_tag(tokens) 
 tagged_tokens = tagged_tokens[:151] # gives us a tagged list of tuples
-print("TAGGED TOKENS")
-print(tagged_tokens)
 
-
+#parts of speech and their scores
 tagmap = {"NN":"a noun","NNS":"a plural noun","VB":"a verb","RB":"an adverb","JJ":"an adjective"}
 substitution_probabilities = {"NN":.15,"NNS":.15,"VB":.1,"RB":.1, "JJ":.1}
 
+#dont add space to punctuation
 def spaced(word):
 	if word in [",", ".", "?", "!", ":", "[", "]"]:
 		return word
 	else:
 		return " " + word
 
+#for mad lib output 
 final_words = []
 
-for (word, tag) in tagged_tokens:
-	if tag not in substitution_probabilities or random.random() > substitution_probabilities[tag]:
-		final_words.append(spaced(word))
+for (word, tag) in tagged_tokens: 
+	if tag not in substitution_probabilities or random.random() > substitution_probabilities[tag]: #decides to choose or skip each part of speech
+		final_words.append(spaced(word)) #adds normal text
 	else:
 		new_word = input("Please enter %s:\n" % (tagmap[tag]))
-		final_words.append(spaced(new_word))
+		final_words.append(spaced(new_word)) #adds user inputted word 
 print
-print ("".join(final_words))
+print ("".join(final_words)) #both if and else funnel to final_words, then joins them together 
 
 print("\n\nEND*******")
