@@ -1,18 +1,13 @@
-'''
-    DiceSimulator.py
-    I don't know if I should say die or dice :()
-    Author: Alan Richmond, Python3.codes
-'''
 import pygame, random, time
  
-size = 256                      # Size of window/dice
+size = 456                      # Size of window/dice
 spsz = size//10                 # size of spots
 m = int(size/2)                 # mid-point of dice (or die?)
 l=t=int(size/4)                 # location of left and top spots
 r=b=size-l                      # location of right and bottom spots
-rolling = 12                    # times that dice rolls before stopping
-diecol = (255,255,127)          # die colour
-spotcol = (0,127,127)           # spot colour
+rolling = 16                    # times that dice rolls before stopping
+diecol = (28, 9, 98)          # die colour
+spotcol = (137, 221, 10)           # spot colour
  
 d = pygame.display.set_mode((size, size))
 d.fill(diecol)
@@ -34,4 +29,4 @@ for i in range(rolling):            # roll the die...
         pygame.draw.circle(d,spotcol,(m,t),spsz)  # middle top
      
     pygame.display.flip()
-    time.sleep(0.2)
+    time.sleep(0.5)
