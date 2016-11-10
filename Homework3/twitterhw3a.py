@@ -5,7 +5,7 @@
 # You will demo this live for grading. 
 
 print("""No output necessary although you 
-    can print out a success/failure message if you want to.""")
+    can print out a success/failure message if you want to.""") 
 
 import tweepy
 import nltk
@@ -22,7 +22,7 @@ auth.set_access_token(access_token,access_token_secret)
 
 api = tweepy.API(auth)
 img = "/Users/tom/projects/SI206/Homework3/media/football.jpg"  # ask about file path
-print("Posting...")
+print("Posting status...")
 api.update_with_media(img, status="#UMSI-206 #Proj3") #adds photo and status
 print("Posted")
 

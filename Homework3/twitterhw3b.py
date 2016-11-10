@@ -2,7 +2,7 @@
 
 # Deliverables:
 # 1) Print each tweet
-# 2) Print the average subjectivity of the results
+# 2) Print the average subjectivity of the results 
 # 3) Print the average polarity of the results
 
 # Be prepared to change the search term during demo. 
@@ -39,6 +39,6 @@ for tweet in public_tweets:
 	print("Tweet Subjectivity: ", tweetsub)
 	print("Tweet Polarity: ", tweetpol)
 
-
+print
 print("Average Subjectivity: ", (avgsub / count))
 print("Average Polarity: ", (avgpol / count))

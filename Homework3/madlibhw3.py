@@ -17,12 +17,13 @@ import random
 
 tokens = text2[:151] #only need first 150
 print
-print("First 150 tokens: ", tokens)
+print("First 150 tokens:")
+print(tokens)
 
 tagged_tokens = nltk.pos_tag(tokens) 
 tagged_tokens = tagged_tokens[:151] # gives us a tagged list of tuples
 
-#parts of speech and their scores
+#parts of speech and their probabilities
 tagmap = {"NN":"a noun","NNS":"a plural noun","VB":"a verb","RB":"an adverb","JJ":"an adjective"}
 substitution_probabilities = {"NN":.15,"NNS":.15,"VB":.1,"RB":.1, "JJ":.1}
 
@@ -43,6 +44,6 @@ for (word, tag) in tagged_tokens:
 		new_word = input("Please enter %s:\n" % (tagmap[tag]))
 		final_words.append(spaced(new_word)) #adds user inputted word 
 print
-print ("".join(final_words)) #both if and else funnel to final_words, then joins them together 
+print ("".join(final_words)) #both if and else funnel to final_words, then joined them together 
 
 print("\n\nEND*******")
