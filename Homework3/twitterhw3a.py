@@ -21,8 +21,7 @@ auth = tweepy.OAuthHandler(consumer_key,consumer_secret) #oauth stuff
 auth.set_access_token(access_token,access_token_secret)
 
 api = tweepy.API(auth)
-img = "/Users/tom/projects/SI206/Homework3/media/football.jpg"  # ask about file path
+img = "media/football.jpg"  # ask about file path
 print("Posting status...")
 api.update_with_media(img, status="#UMSI-206 #Proj3") #adds photo and status
 print("Posted")
-

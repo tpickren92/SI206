@@ -3,7 +3,7 @@
 # STEPS 
 # Create a similar HTML file but 
 # 1) Replace every occurrence of the word “student” with “AMAZING
-# student.”  
+# student.”   
 # 2) Replace the main picture with a picture of yourself.
 # 3) Replace any local images with the image I provided in media.  (You
 # must keep the image in a separate folder than your html code.
@@ -29,18 +29,17 @@ findstudent = soup.find_all(text = re.compile('student'))
 for word in findstudent: #each line with student
     fixed_text = str(word).replace('student', 'AMAZING student')
     word.replace_with(fixed_text) #swaps original text with edited text
+
 ### Part 2 
 for link in soup.findAll('iframe'): # only 1 iframe on page, contains video
-	link['src'] = "/Users/tom/projects/SI206/Homework3/media/tomcat.jpg" #replaces original link src
+	link['src'] = "media/tomcat.jpg" #replaces original link src
 
 ### Part 3
 for img in soup.findAll('img'): 
-	img['src'] = "/Users/tom/projects/SI206/Homework3/media/logo.png" #replaces original link src
+	img['src'] = "media/logo.png" #replaces original link src
 
 text_file = open("Hw3SoupOutput.html", "w")
 print('Outputting html file....')
 text_file.write(str(soup))
 text_file.close()
 print('Done')
-
-

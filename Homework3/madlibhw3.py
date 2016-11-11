@@ -7,7 +7,7 @@
 # 3) Replace nouns 15% of the time, everything else 10%
 
 # Deliverables:
-# 1) Print the orginal text (150 tokens) - done
+# 1) Print the orginal text (150 tokens) 
 # 1) Print the new text
 print("START*******")
 
@@ -16,9 +16,6 @@ from nltk.book import text2
 import random
 
 tokens = text2[:151] #only need first 150
-print
-print("First 150 tokens:")
-print(tokens)
 
 tagged_tokens = nltk.pos_tag(tokens) 
 tagged_tokens = tagged_tokens[:151] # gives us a tagged list of tuples
@@ -33,6 +30,13 @@ def spaced(word):
 		return word
 	else:
 		return " " + word
+
+tokens_to_string = []
+for word in tokens:
+	tokens_to_string.append(spaced(word)) #original tokens need to be run through spaced
+
+print("First 150 tokens:")
+print ("".join(tokens_to_string)) 
 
 #for mad lib output 
 final_words = []
