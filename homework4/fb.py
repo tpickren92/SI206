@@ -1,14 +1,3 @@
-# import urllib
-# # import urllib2
-# from urllib.request import urlopen
-# import requests
-# import requests_oauthlib
-# import json
-# import datetime
-# import csv
-# import time
-
-
 import urllib.request
 import json
 import datetime
@@ -20,13 +9,10 @@ import codecs
 
 app_id = "1798098537096839"
 app_secret = "6d77ad9d68559dee924b923f27b65499" 
-
 access_token = app_id + "|" + app_secret
 
 # page_id = input("Enter a user to search: ")
 page_id = "diplo"
-
-
 
 def request_until_succeed(url):
     req = urllib.request.Request(url)
@@ -45,8 +31,7 @@ def request_until_succeed(url):
 
     return response.read().decode(response.headers.get_content_charset())
 
-
-# Needed to write tricky unicode correctly to csv
+# Needed to write tricky unicode correctly to csv - do i still need this?
 def unicode_normalize(text):
     return text.translate({ 0x2018:0x27, 0x2019:0x27, 0x201C:0x22, 0x201D:0x22,
                             0xa0:0x20 })
@@ -69,7 +54,14 @@ def getFacebookPageFeedData(page_id, access_token, num_statuses):
     return data
     
 
-test_status = getFacebookPageFeedData(page_id, access_token, 5)["data"]#[0]
+test_status = getFacebookPageFeedData(page_id, access_token, 5)["data"]
 
-# print(test_status)
-print (json.dumps(test_status, indent=4, sort_keys=True))
+for post in test_status:
+    print(post["message"])
+    print(post["created_time"])
+    if "shares" in post:
+        print(post["shares"]["count"])
+    else:
+        print("No shares") # should create shares key in dictionary with count of 0?
+
+# print (json.dumps(test_status, indent=4, sort_keys=True)) #to view original json with nesting 
