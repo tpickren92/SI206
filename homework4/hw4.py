@@ -12,8 +12,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 ## Ask user who to search and how many posts they want 
-input_id = str(input("Enter user name to search: @"))
-input_count = str(input("Enter how many tweets to return: "))
+# input_id = str(input("Enter user name to search: @"))
+# input_count = str(input("Enter how many tweets to return: "))
+input_id = 'diplo'
+input_count = 20
 
 ## need rest class for twitter and fb, then both of those are inherited by graphing class
 ## structure of tweepy objec - http://tkang.blogspot.com/2011/01/tweepy-twitter-api-status-object.html
@@ -54,9 +56,6 @@ class twitterREST():
                 self.number_of_retweets = 0
                 self.all_retweets.append(self.number_of_retweets)
                 print("No retweets")
-
-        print(self.all_retweets)
-        print("all retweets ^^^^^^")            
 
     def __str__(self):
         return "The user chosen id is {} and the number of posts is {}.".format(self.input_id,self.input_count)        
@@ -99,13 +98,60 @@ class fbREST():
                 self.share_count = 0 
                 self.all_shares.append(self.share_count)
                 print("No shares")
-
-        print(self.all_shares)
-        print("All shares ^^^^^^")
         return data
 
     def __str__(self):
         return "The user chosen id is {} and the number of posts is {}.".format(self.input_id,self.input_count)        
+
+
+class Graphing(twitterREST,fbREST):
+    def __init__(self):
+        twitterREST.__init__(self, input_id, input_count)
+        twitterREST.twitterCall(self)
+        print(self.all_retweets)
+        print("all retweets ^^^^^^^^^^^^^^^^")            
+        fbREST.__init__(self, input_id, input_count)
+        fbREST.fbCall(self)
+        print(self.all_shares)
+        print("All shares ^^^^^^^^^^^")
+
+        N = int(input_count)
+        ##all_shares = [190, 325, 130, 135, 427] # share/retweet count - used to be tuple but that isnt needed?
+        # menStd = (2, 3, 4, 1, 2) #dont need
+
+        ind = np.arange(N)  # the x locations for the groups
+        width = 0.35       # the width of the bars
+
+        fig, ax = plt.subplots()
+        rects1 = ax.bar(ind, self.all_shares, width, color='b')
+        for rect in rects1:
+            height = rect.get_height()
+            ax.text(rect.get_x() + rect.get_width()/2., 1.05*height,'%d' % int(height), ha='center', va='bottom')
+
+        ##all_retweets = [125, 202, 314, 120, 250]
+        # womenStd = (3, 5, 2, 3, 3)
+        rects2 = ax.bar(ind + width, self.all_retweets, width, color='y')
+        for rect in rects2:
+            height = rect.get_height()
+            ax.text(rect.get_x() + rect.get_width()/2., 1.05*height,'%d' % int(height), ha='center', va='bottom')
+
+
+        # add some text for labels, title and axes ticks
+        ax.set_ylabel('Number of Shares/Retweets of') #nice to have username added here
+        ax.set_title('Share/Retweet comparison')
+        ax.set_xticks(ind + width)
+
+        empty = []
+        count = 1
+        for x in range(input_count):
+            empty.append("Post "+str(count))
+            count += 1
+
+        ax.set_xticklabels(empty,rotation=45) #how to include time of creation? - need to adjust for number inputting
+
+        ax.legend((rects1[0], rects2[0]), ('Facebook', 'Twitter')) #key text
+
+        plt.show()
 
 
 f = fbREST(input_id,input_count)
@@ -114,4 +160,5 @@ fb_status = f.fbCall()
 t = twitterREST(input_id, input_count)
 twitter_status = t.twitterCall()
 
+g = Graphing()
 
