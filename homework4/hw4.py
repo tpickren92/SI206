@@ -12,10 +12,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 ## Ask user who to search and how many posts they want 
-# input_id = str(input("Enter user name to search: @"))
-# input_count = str(input("Enter how many tweets to return: "))
-input_id = 'diplo'
-input_count = 20
+input_id = str(input("Enter user name to search: "))
+input_count = int(input("Enter how many tweets to return: "))
 
 ## need rest class for twitter and fb, then both of those are inherited by graphing class
 ## structure of tweepy objec - http://tkang.blogspot.com/2011/01/tweepy-twitter-api-status-object.html
@@ -38,15 +36,16 @@ class twitterREST():
         api = tweepy.API(auth)
         
         search_user = api.user_timeline(id=self.input_id, count=self.input_count) #return user defined items
-
-        print("Here are {}'s last {} tweets: ".format(self.input_id,self.input_count))
+        print("")
+        print("Tweets:")
         print("")
 
         self.number_of_retweets = 0
         self.all_retweets = []
 
         for tweet in search_user:
-            print ("Text:", tweet.text) #tweet content
+            print("")
+            print ("Tweet:", tweet.text) #tweet content
             print ("Created:", tweet.created_at) #time of creation
             if tweet.retweet_count:
                 self.number_of_retweets = tweet.retweet_count
@@ -58,7 +57,7 @@ class twitterREST():
                 print("No retweets")
 
     def __str__(self):
-        return "The user chosen id is {} and the number of posts is {}.".format(self.input_id,self.input_count)        
+        return "The user chosen id is {} and the number of tweets is {}.".format(self.input_id,self.input_count)        
     
 class fbREST():
     def __init__(self, input_id, input_count): #when instance is created, requires id and count
@@ -84,16 +83,21 @@ class fbREST():
 
         data = json.loads(response)
         data = data['data'] # ignore messy message ids
-
+        print("")
+        print("Posts:")
+        print("")
         self.share_count = 0
         self.all_shares = []
         for post in data:
-            print(post["message"])
-            print(post["created_time"])
+            print("")
+            if "message" in post:
+                print ("Post: ", post["message"])
+            if "created_time" in post:
+                print ("Created:", post["created_time"])
             if "shares" in post:
                 self.share_count = post["shares"]["count"]
                 self.all_shares.append(self.share_count)
-                print(self.all_shares)
+                # print(self.all_shares)
             else:
                 self.share_count = 0 
                 self.all_shares.append(self.share_count)
@@ -108,12 +112,12 @@ class Graphing(twitterREST,fbREST):
     def __init__(self):
         twitterREST.__init__(self, input_id, input_count)
         twitterREST.twitterCall(self)
-        print(self.all_retweets)
-        print("all retweets ^^^^^^^^^^^^^^^^")            
+        # print(self.all_retweets)
+        # print("all retweets ^^^^^^^^^^^^^^^^")            
         fbREST.__init__(self, input_id, input_count)
         fbREST.fbCall(self)
-        print(self.all_shares)
-        print("All shares ^^^^^^^^^^^")
+        # print(self.all_shares)
+        # print("All shares ^^^^^^^^^^^")
 
         N = int(input_count)
         ##all_shares = [190, 325, 130, 135, 427] # share/retweet count - used to be tuple but that isnt needed?
@@ -135,10 +139,9 @@ class Graphing(twitterREST,fbREST):
             height = rect.get_height()
             ax.text(rect.get_x() + rect.get_width()/2., 1.05*height,'%d' % int(height), ha='center', va='bottom')
 
-
         # add some text for labels, title and axes ticks
-        ax.set_ylabel('Number of Shares/Retweets of') #nice to have username added here
-        ax.set_title('Share/Retweet comparison')
+        ax.set_ylabel('Number of Shares & Retweets') #nice to have username added here
+        ax.set_title('Share & Retweet comparison')
         ax.set_xticks(ind + width)
 
         empty = []
